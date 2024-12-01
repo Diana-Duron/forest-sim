@@ -22,14 +22,14 @@ const growthProbability = 0.05; // Probabilidad de crecimiento de árbol (p)
 const simulation = new ForestFireSimulation(numRows, numCols, cellSize, lightningProbability, growthProbability);
 
 // Cargar imágenes para los diferentes estados de las celdas
-await PIXI.Assets.load('/forestFire/images/arbol.png');
-await PIXI.Assets.load('/forestFire/images/fuego.png');
-await PIXI.Assets.load('/forestFire/images/tierra.jpg');
+await PIXI.Assets.load('./images/arbol.png');
+await PIXI.Assets.load('./images/fuego.png');
+await PIXI.Assets.load('./images/tierra.jpg');
 
 // Obtener las texturas cargadas
-const treeTexture = PIXI.Texture.from( '/forestFire/images/arbol.png');
-const fireTexture = PIXI.Texture.from( '/forestFire/images/fuego.png');
-const emptyTexture = PIXI.Texture.from('/forestFire/images/tierra.jpg');
+const treeTexture = PIXI.Texture.from( './images/arbol.png');
+const fireTexture = PIXI.Texture.from( './images/fuego.png');
+const emptyTexture = PIXI.Texture.from('./images/tierra.jpg');
 
 // Crear el contenedor de gráficos
 const gridContainer = new PIXI.Container();
