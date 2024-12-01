@@ -1,0 +1,73 @@
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+  }
+  main {
+    flex: 1 0 auto;
+  }
+  .canvas-container {
+    width: 100%; /* Usar todo el ancho disponible */
+    display: flex;
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center; /* Centra verticalmente */
+    padding: 20px; /* Añadir un poco de espacio alrededor */
+    box-sizing: border-box; /* Incluye padding y border en el cálculo de tamaño total */
+  }
+  .input-field {
+    margin-bottom: 30px;
+  }
+  .control-label {
+    margin-bottom: 10px;
+    display: block;
+    font-weight: bold;
+  }
+  .slider {
+    margin-top: 10px;
+  }
+  .noUi-tooltip {
+    display: none;
+  }
+  .noUi-active .noUi-tooltip {
+    display: block;
+  }
+  .noUi-target {
+    background-color: #fff; /* Fondo blanco */
+  }
+
+  .noUi-connect {
+    background-color: #000; /* Conectores en negro */
+  }
+
+  .noUi-handle {
+    border: 2px solid #000; /* Manilla negra */
+    background-color: #fff; /* Fondo de la manilla en blanco */
+  }
+
+  .btn {
+    background-color: #000 !important; /* Fondo en negro */
+    color: #fff !important; /* Texto en blanco */
+  }
+
+  .btn:hover {
+    background-color: #555 !important; /* Fondo gris al pasar el mouse */
+  }
+  nav {
+    background-color: #000 !important; /* Fondo en negro */
+  }
+
+  nav .brand-logo {
+    color: #fff !important; /* Color del texto en blanco */
+  }
+
+  nav .nav-wrapper .container a {
+    color: #fff !important; /* Color del texto de los enlaces en blanco */
+  }
+  .page-footer {
+    background-color: #000 !important; /* Fondo en negro */
+    color: #fff !important; /* Texto en blanco */
+  }
+
+  .page-footer .container {
+    color: #fff !important; /* Color del texto dentro del contenedor en blanco */
+  }

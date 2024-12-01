@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simulador de Incendios Forestales</title>
+  
+  <!-- Materialize CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  
+  <!-- Materialize Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  
+  <!-- noUiSlider CSS -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.7.0/nouislider.min.css" rel="stylesheet">
+  
+  <!-- index css -->
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+  <!-- Barra de navegación -->
+  <nav class="black">
+    <div class="nav-wrapper container">
+      <a href="#" class="brand-logo">Simulador de Incendios Forestales</a>
+    </div>
+  </nav>
+
+  <main>
+    <div class="container">
+      <div class="row">
+        <!-- Columna de inputs -->
+        <div class="col s12 m4">
+          <div class="input-field">
+            <input id="seed_fire" type="text" class="validate">
+            <label for="seed_fire">Semilla para inicio del incendio</label>
+          </div>
+          <div class="input-field">
+            <input id="seed_forest" type="text" class="validate">
+            <label for="seed_forest">Semilla para distribución del bosque</label>
+          </div>
+          <div class="input-field">
+            <span class="control-label">% De densidad del bosque</span>
+            <div id="density_slider" class="slider"></div>
+          </div>
+          <div class="input-field">
+            <span class="control-label">Velocidad del viento (km/h)</span>
+            <div id="wind_speed_slider" class="slider"></div>
+          </div>
+          <div class="input-field">
+            <label class="active">Dirección del viento</label>
+            <select id="wind_direction">
+              <option value="" disabled selected>Seleccione dirección</option>
+              <option value="N">Norte</option>
+              <option value="S">Sur</option>
+              <option value="E">Este</option>
+              <option value="W">Oeste</option>
+            </select>
+          </div>
+          <div class="input-field">
+            <span class="control-label">% De humedad del terreno</span>
+            <div id="humidity_slider" class="slider"></div>
+          </div>
+          <div class="input-field">
+            <span class="control-label">% De probabilidad de ignición espontánea</span>
+            <div id="ignition_slider" class="slider"></div>
+          </div>
+          <div class="input-field">
+            <span class="control-label">% De probabilidad de incendio en árboles adyacentes diagonales</span>
+            <div id="adjacent_fire_prob_slider" class="slider"></div>
+          </div>
+        </div>
+        <!-- Columna del canvas y controles -->
+        <div class="col s12 m8 center-align">
+          <div class="canvas-container" id="canvas-container"></div>
+          
+          <!-- Botones de control -->
+          <div class="row center-align" style="margin-top: 5%;">
+            <div class="col s12">
+              <button id="startButton" class="btn waves-effect waves-light green">
+                <i class="material-icons left">play_arrow</i>Iniciar
+              </button>
+              <button id="pauseButton" class="btn waves-effect waves-light orange">
+                <i class="material-icons left">pause</i>Pausar
+              </button>
+              <button id="restartButton" class="btn waves-effect waves-light red">
+                <i class="material-icons left">refresh</i>Reiniciar
+              </button>
+                <!-- Control de velocidad -->
+                <div class="input-field" style="margin-top: 40px; max-width: 300px; margin-left: auto; margin-right: auto;">
+                <span class="control-label">Velocidad:</span>
+                <input id="speedControl" type="range" min="100" max="2000" step="100" value="500">
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Pie de página -->
+  <footer class="page-footer black lighten-1">
+    <div class="footer-copyright">
+      <div class="container center-align">
+        Simulador de incendios forestales
+      </div>
+    </div>
+  </footer>
+
+  <!-- Biblioteca Pixi.js -->
+  <script src="./pixi.js"></script>
+
+  <!-- JavaScript de Materialize -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  
+  <!-- noUiSlider JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.7.0/nouislider.min.js"></script>
+
+  <!-- Inicializar componentes de Materialize y noUiSlider -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const elemsSelect = document.querySelectorAll('select');
+      M.FormSelect.init(elemsSelect);
+
+      // Inicializar noUiSlider
+      const createRangeSlider = (elementId, start, min, max) => {
+        const slider = document.getElementById(elementId);
+        noUiSlider.create(slider, {
+          start: start,
+          connect: true,
+          range: {
+            min: min,
+            max: max
+          },
+          tooltips: true,
+          format: {
+            from: Number,
+            to: function(value) {
+              return Math.round(value);
+            }
+          }
+        });
+
+        // Hacer aparecer los tooltips solo al pasar el ratón
+        slider.noUiSlider.on('hover', function() {
+          slider.classList.toggle('noUi-active');
+        });
+      };
+
+      createRangeSlider('density_slider', [20, 80], 0, 100);
+      createRangeSlider('wind_speed_slider', [100, 400], 0, 500);
+      createRangeSlider('humidity_slider', [30, 70], 0, 100);
+      createRangeSlider('ignition_slider', [10, 90], 0, 100);
+      createRangeSlider('adjacent_fire_prob_slider', [5, 95], 0, 100);
+    });
+  </script>
+
+  <!-- Script principal -->
+  <script type="module" src="index.js"></script>
+</body>
+</html>
