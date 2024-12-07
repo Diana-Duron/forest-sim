@@ -75,3 +75,36 @@ body {
     direction: rtl; /* Invierte la dirección del control */
 }
 
+input:not([type]):focus:not([readonly])+label,input[type=text]:not(.browser-default):focus:not([readonly])+label,input[type=password]:not(.browser-default):focus:not([readonly])+label,input[type=email]:not(.browser-default):focus:not([readonly])+label,input[type=url]:not(.browser-default):focus:not([readonly])+label,input[type=time]:not(.browser-default):focus:not([readonly])+label,input[type=date]:not(.browser-default):focus:not([readonly])+label,input[type=datetime]:not(.browser-default):focus:not([readonly])+label,input[type=datetime-local]:not(.browser-default):focus:not([readonly])+label,input[type=tel]:not(.browser-default):focus:not([readonly])+label,input[type=number]:not(.browser-default):focus:not([readonly])+label,input[type=search]:not(.browser-default):focus:not([readonly])+label,textarea.materialize-textarea:focus:not([readonly])+label {
+  color: #000 !important; /* Color del label en los inputs al enfocar */
+}
+
+input:not([type]):focus:not([readonly]),input[type=text]:not(.browser-default):focus:not([readonly]),input[type=password]:not(.browser-default):focus:not([readonly]),input[type=email]:not(.browser-default):focus:not([readonly]),input[type=url]:not(.browser-default):focus:not([readonly]),input[type=time]:not(.browser-default):focus:not([readonly]),input[type=date]:not(.browser-default):focus:not([readonly]),input[type=datetime]:not(.browser-default):focus:not([readonly]),input[type=datetime-local]:not(.browser-default):focus:not([readonly]),input[type=tel]:not(.browser-default):focus:not([readonly]),input[type=number]:not(.browser-default):focus:not([readonly]),input[type=search]:not(.browser-default):focus:not([readonly]),textarea.materialize-textarea:focus:not([readonly]) {
+  border-bottom: 1px solid #000 !important; /* Cambia el color del borde inferior al enfocar */
+  -webkit-box-shadow: 0 1px 0 0 #000 !important; /* Cambia el color de la sombra al enfocar */
+  box-shadow: 0 1px 0 0 #000 !important; /* Cambia el color de la sombra al enfocar */
+}
+
+input[type=range]+.thumb {
+  background-color: #000 !important; /* Selector del rango en negro */
+  margin-top: 25px;
+}
+
+/* Canvas responsive para pantallas medianas y pequeñas */
+@media (max-width: 768px) {
+  .canvas-container {
+    padding: 10px; /* Reduce el padding en pantallas medianas */
+  }
+
+  canvas {
+    width: 320px !important;
+    height: 180px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .canvas-container {
+    padding: 5px; /* Reduce aún más el padding en pantallas pequeñas */
+    flex-direction: column; /* Cambia la dirección del flex a columna */
+  }
+}

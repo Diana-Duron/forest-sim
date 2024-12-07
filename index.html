@@ -16,8 +16,35 @@
   
   <!-- index css -->
   <link rel="stylesheet" href="index.css">
+  <style>
+    .canvas-container {
+      min-height: 200px;
+      background-color: #f5f5f5;
+    }
+    .slider-value {
+      margin-left: 10px;
+      font-weight: bold;
+    }
+    main {
+      margin-top: 2%;
+    }
+  </style>
+
+  <!-- Script principal -->
+  <script type="module" src="index.js"></script>
 </head>
 <body>
+   <!-- Modal de bienvenida -->
+   <div id="welcomeModal" class="modal">
+    <div class="modal-content">
+      <h4>Bienvenido al Simulador</h4>
+      <p>Este simulador permite modelar el comportamiento de incendios forestales bajo distintas condiciones. Ajusta los parámetros y observa los resultados.</p>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Comenzar</a>
+    </div>
+  </div>
+
   <!-- Barra de navegación -->
   <nav class="black">
     <div class="nav-wrapper container">
@@ -29,67 +56,63 @@
     <div class="container">
       <div class="row">
         <!-- Columna de inputs -->
-        <div class="col s12 m4">
+        <div class="col s12 m3">
           <div class="input-field">
-            <input id="seed_fire" type="text" class="validate">
-            <label for="seed_fire">Semilla para inicio del incendio</label>
+            <input placeholder="seed_value" id="seed_forest" type="text" class="validate">
+            <label for="seed_forest">Semilla: Distribución</label>
           </div>
           <div class="input-field">
-            <input id="seed_forest" type="text" class="validate">
-            <label for="seed_forest">Semilla para distribución del bosque</label>
-          </div>
-          <div class="input-field">
-            <span class="control-label">% De densidad del bosque</span>
+            <span class="control-label">% De densidad del bosque<span id="density_value" class="slider-value">50</span></span>
             <div id="density_slider" class="slider"></div>
           </div>
           <div class="input-field">
-            <span class="control-label">Velocidad del viento (km/h)</span>
+            <span class="control-label">Velocidad del viento (km/h)<span id="wind_speed_value" class="slider-value">5</span></span>
             <div id="wind_speed_slider" class="slider"></div>
           </div>
           <div class="input-field">
             <label class="active">Dirección del viento</label>
             <select id="wind_direction">
               <option value="" disabled selected>Seleccione dirección</option>
-              <option value="N">Norte</option>
-              <option value="S">Sur</option>
-              <option value="E">Este</option>
-              <option value="W">Oeste</option>
+              <option value="Norte">Norte</option>
+              <option value="Sur">Sur</option>
+              <option value="Este">Este</option>
+              <option value="Oeste">Oeste</option>
             </select>
           </div>
           <div class="input-field">
-            <span class="control-label">% De humedad del terreno</span>
+            <span class="control-label">% De humedad del terreno<span id="humidity_value" class="slider-value">50</span></span>
             <div id="humidity_slider" class="slider"></div>
           </div>
           <div class="input-field">
-            <span class="control-label">% De probabilidad de ignición espontánea</span>
+            <span class="control-label">% De probabilidad de ignición espontánea<span id="ignition_value" class="slider-value">50</span></span>
             <div id="ignition_slider" class="slider"></div>
-          </div>
-          <div class="input-field">
-            <span class="control-label">% De probabilidad de incendio en árboles adyacentes diagonales</span>
-            <div id="adjacent_fire_prob_slider" class="slider"></div>
           </div>
         </div>
         <!-- Columna del canvas y controles -->
-        <div class="col s12 m8 center-align">
-          <div class="canvas-container" id="canvas-container"></div>
+        <div class="col s12 m9">
+          <div class="canvas-container center-align" id="canvas-container"></div>
           
           <!-- Botones de control -->
-          <div class="row center-align" style="margin-top: 5%;">
-            <div class="col s12">
-              <button id="startButton" class="btn waves-effect waves-light green">
+          <div class="row center-align" style="margin-top: 20px;">
+            <div class="col s12 m4">
+              <button id="startButton" class="btn waves-effect waves-light green btn-large">
                 <i class="material-icons left">play_arrow</i>Iniciar
               </button>
-              <button id="pauseButton" class="btn waves-effect waves-light orange">
+            </div>
+            <div class="col s12 m4">
+              <button id="pauseButton" class="btn waves-effect waves-light orange btn-large">
                 <i class="material-icons left">pause</i>Pausar
               </button>
-              <button id="restartButton" class="btn waves-effect waves-light red">
+            </div>
+            <div class="col s12 m4">
+              <button id="restartButton" class="btn waves-effect waves-light red btn-large">
                 <i class="material-icons left">refresh</i>Reiniciar
               </button>
-                <!-- Control de velocidad -->
-                <div class="input-field" style="margin-top: 40px; max-width: 300px; margin-left: auto; margin-right: auto;">
-                <span class="control-label">Velocidad:</span>
-                <input id="speedControl" type="range" min="100" max="2000" step="100" value="500">
-                </div>
+            </div>
+            <!-- Control de velocidad -->
+            <div class="input-field col s12" style="margin-top: 20px;">
+              <span class="control-label">Velocidad: <span id="speed_value" class="slider-value">500</span> ms</span>
+              <input id="speedControl" type="range" min="100" max="2000" step="100" value="500">
             </div>
           </div>
         </div>
@@ -115,18 +138,28 @@
   <!-- noUiSlider JavaScript -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.7.0/nouislider.min.js"></script>
 
-  <!-- Inicializar componentes de Materialize y noUiSlider -->
+  <!-- Inicializar componentes de Materialize, noUiSlider y actualizar la velocidad -->
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       const elemsSelect = document.querySelectorAll('select');
       M.FormSelect.init(elemsSelect);
 
-      // Inicializar noUiSlider
-      const createRangeSlider = (elementId, start, min, max) => {
+      // Inicializar el modal
+      const elemModal = document.querySelectorAll('.modal');
+      M.Modal.init(elemModal);
+
+      // Mostrar el modal de bienvenida automáticamente
+      const welcomeModal = M.Modal.getInstance(document.querySelector('#welcomeModal'));
+      welcomeModal.open();
+
+      // Función actualizada para crear sliders de un solo controlador con el relleno
+      const createSingleSlider = (elementId, start, min, max, valueDisplayId) => {
         const slider = document.getElementById(elementId);
+        const valueDisplay = document.getElementById(valueDisplayId);
+
         noUiSlider.create(slider, {
           start: start,
-          connect: true,
+          connect: 'lower',  // Conectado para mostrar relleno hasta el controlador
           range: {
             min: min,
             max: max
@@ -140,21 +173,26 @@
           }
         });
 
-        // Hacer aparecer los tooltips solo al pasar el ratón
-        slider.noUiSlider.on('hover', function() {
-          slider.classList.toggle('noUi-active');
+        // Actualizar el valor mostrado al mover el slider
+        slider.noUiSlider.on('update', function(values, handle) {
+          valueDisplay.innerText = values[handle];
         });
       };
 
-      createRangeSlider('density_slider', [0, 100], 0, 100);
-      createRangeSlider('wind_speed_slider', [0, 10], 0, 10);
-      createRangeSlider('humidity_slider', [0, 100], 0, 100);
-      createRangeSlider('ignition_slider', [10, 90], 0, 100);
-      createRangeSlider('adjacent_fire_prob_slider', [5, 95], 0, 100);
+      // Inicializar sliders con valores iniciales
+      //createSingleSlider('density_slider', 50, 0, 100, 'density_value');
+      //createSingleSlider('wind_speed_slider', 5, 0, 10, 'wind_speed_value');
+      //createSingleSlider('humidity_slider', 50, 0, 100, 'humidity_value');
+      //createSingleSlider('ignition_slider', 50, 0, 100, 'ignition_value');
+
+      // Actualizar la velocidad de la simulación en ms
+      const speedControl = document.getElementById('speedControl');
+      const speedValue = document.getElementById('speed_value');
+      speedControl.addEventListener('input', function() {
+        speedValue.innerText = speedControl.value;
+      });
     });
   </script>
-
-  <!-- Script principal -->
-  <script type="module" src="index.js"></script>
+  
 </body>
 </html>

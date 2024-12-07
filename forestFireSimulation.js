@@ -40,6 +40,7 @@ export class ForestFireSimulation {
   createGrid() {
     const grid = [];
     const rng = seedrandom(this.seed)
+    this.setSeed(rng.int32());
     const density = Math.max(0, Math.min(1, this.forestDensity));
     for (let i = 0; i < this.numRows; i++) {
       grid[i] = [];
@@ -226,6 +227,20 @@ export class ForestFireSimulation {
     this.grid = this.createGrid();
   }
 
+  // Verificar si la simulación ha terminado
+  hasSimulationEnded() {
+    return this.endSim;
+  }
+  
+  // Obtener estadísticas de la simulación
+  getSimulationStats() {
+    return {
+      totalCycles: this.totalCycles,
+      totalTrees: this.totalTrees,
+      burnedTrees: this.burnedTrees
+    };
+  }
+
   // Cambiar la velocidad de la simulación
   setSimulationSpeed(newSpeed, drawGrid) {
 
@@ -238,5 +253,137 @@ export class ForestFireSimulation {
       this.stopSimulation();
       this.startSimulation(drawGrid);
     }
+  }
+
+  getSimulationSpeed() {
+    return this.simulationSpeed;
+  }
+
+  getForestDensity() {
+    return this.forestDensity;
+  }
+
+  getHumidity() {
+    return this.humidity;
+  }
+
+  getWindDirection() {
+    return this.windDirection;
+  }
+
+  getWindSpeed() {
+    return this.windSpeed;
+  }
+
+  getBurnDuration() {
+    return this.burnDuration;
+  }
+
+  getIgnitingProbability() {
+    return this.ignitingProbability;
+  }
+
+  getGrowthProbability() {
+    return this.growthProbability;
+  }
+
+  getSimDuration() {
+    return this.simDuration;
+  }
+
+  getSeed() {
+    return this.seed;
+  }
+
+  setSeed(newSeed) {
+    this.seed = newSeed;
+  }
+
+  setForestDensity(newDensity, drawGrid) {
+
+    if(this.endSim == true){
+      return;
+    }    
+
+    this.forestDensity = newDensity;
+    this.restartSimulation();
+    drawGrid(this.grid);
+  }
+
+  setHumidity(newHumidity, drawGrid) {
+
+    if(this.endSim == true){
+      return;
+    }    
+
+    this.humidity = newHumidity;
+    this.restartSimulation();
+    drawGrid(this.grid);
+  }
+
+  setWindDirection(newWindDirection, drawGrid) {
+
+    if(this.endSim == true){
+      return;
+    }    
+
+    this.windDirection = newWindDirection;
+    this.restartSimulation();
+    drawGrid(this.grid);
+  }
+
+  setWindSpeed(newWindSpeed, drawGrid) {
+
+    if(this.endSim == true){
+      return;
+    }    
+
+    this.windSpeed = newWindSpeed;
+    this.restartSimulation();
+    drawGrid(this.grid);
+  }
+
+  setBurnDuration(newBurnDuration, drawGrid) {
+
+    if(this.endSim == true){
+      return;
+    }    
+
+    this.burnDuration = newBurnDuration;
+    this.restartSimulation();
+    drawGrid(this.grid);
+  }
+
+  setIgnitingProbability(newIgnitingProbability, drawGrid) {
+
+    if(this.endSim == true){
+      return;
+    }    
+
+    this.ignitingProbability = newIgnitingProbability;
+    this.restartSimulation();
+    drawGrid(this.grid);
+  }
+
+  setGrowthProbability(newGrowthProbability, drawGrid) {
+
+    if(this.endSim == true){
+      return;
+    }    
+
+    this.growthProbability = newGrowthProbability;
+    this.restartSimulation();
+    drawGrid(this.grid);
+  }
+
+  setSimDuration(newSimDuration, drawGrid) {
+
+    if(this.endSim == true){
+      return;
+    }    
+
+    this.simDuration = newSimDuration;
+    this.restartSimulation();
+    drawGrid(this.grid);
   }
 }
