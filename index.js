@@ -56,16 +56,16 @@ windSpeed, simDuration
 let selected = {posI: null, posJ: null};
 
 // Cargar imágenes para los diferentes estados de las celdas
-await PIXI.Assets.load('./images/arbol.png');
-await PIXI.Assets.load('./images/fuego.png');
-await PIXI.Assets.load('./images/tierra.jpg');
-await PIXI.Assets.load('./images/quemado.png');
+await PIXI.Assets.load('/forest-sim/images/arbol.png');
+await PIXI.Assets.load('/forest-sim/images/fuego.png');
+await PIXI.Assets.load('/forest-sim/images/tierra.jpg');
+await PIXI.Assets.load('/forest-sim/images/quemado.png');
 
 // Obtener las texturas cargadas
-const treeTexture = PIXI.Texture.from( './images/arbol.png');
-const fireTexture = PIXI.Texture.from( './images/fuego.png');
-const emptyTexture = PIXI.Texture.from('./images/tierra.jpg');
-const burntTexture = PIXI.Texture.from('./images/quemado.png');
+const treeTexture = PIXI.Texture.from( '/forest-sim/images/arbol.png');
+const fireTexture = PIXI.Texture.from( '/forest-sim/images/fuego.png');
+const emptyTexture = PIXI.Texture.from('/forest-sim/images/tierra.jpg');
+const burntTexture = PIXI.Texture.from('/forest-sim/images/quemado.png');
 
 // Crear el contenedor de gráficos
 const gridContainer = new PIXI.Container();
