@@ -1,6 +1,6 @@
 // index.js
 
-import { ForestFireSimulation } from '..Simulation.js';
+import { ForestFireSimulation } from './forestFireSimulation.js';
 
 // Sobreescribir la función _calcRangeOffset
 (function() {
