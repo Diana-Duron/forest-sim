@@ -71,3 +71,7 @@ body {
   .page-footer .container {
     color: #fff !important; /* Color del texto dentro del contenedor en blanco */
   }
+  input[type="range"] {
+    direction: rtl; /* Invierte la dirección del control */
+}
+
